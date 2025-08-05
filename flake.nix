@@ -1,26 +1,25 @@
 {
-  description = "A Rust Development Enviroment";
+  description = "A Python Development Enviroment";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { self, nixpkgs, flake-utils, rust-overlay }:
+  outputs = { self, nixpkgs, flake-utils }:
   flake-utils.lib.eachDefaultSystem (system:
     let
-      overlays = [ (import rust-overlay) ];
+      # Unnecesary for the moment:
+      # overlays = [ ];
       pkgs = import nixpkgs {
-        inherit system overlays;
+        inherit system;
       };
     in {
       devShells.default = with pkgs; mkShell {
         buildInputs = [
-	  rust-bin.stable.latest.default
+	  (pkgs.python3.withPackages (python-pkgs: [
+            # Additional python packages go here
+	  ]))
 	];
 
         # For convinience
