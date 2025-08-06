@@ -19,7 +19,7 @@
         buildInputs = [
 	  (pkgs.python3.withPackages (py-pkgs: with py-pkgs; [
             # Additional python packages go here
-	    # matplotlib
+	    # manim
 	  ]))
 	];
 
